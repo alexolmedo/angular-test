@@ -23,8 +23,11 @@ export class UsersComponent implements OnInit {
     // Fill table data
     const usuarios$ = this._userRest.findAll();
     usuarios$.subscribe((users) => {
-      this.users = users;
-    });
+        this.users = users;
+      }, (error => {
+        alert(`Backend error!`);
+      })
+    );
   }
 
   // Formly field for username search
@@ -82,7 +85,7 @@ export class UsersComponent implements OnInit {
         ];
         window.location.reload();
       }, (error => {
-        console.error('Error: ', error);
+        alert(`Backend error!`);
       })
     );
   }
