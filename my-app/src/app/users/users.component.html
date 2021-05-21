@@ -1,5 +1,13 @@
 <div class="row">
   <div class="col">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+      <button type="Search" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+<div class="row pt-5">
+  <div class="col">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -11,12 +19,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let user of users">
-        <th scope="row">{{ user.id | number }}</th>
+        <th scope="row">{{ user.id }}</th>
         <td>
           {{ user.name }}
         </td>
-        <td>{{ user.public_repos | number }}</td>
-        <td>{{ user.location | number }}</td>
+        <td>{{ user.public_repos }}</td>
+        <td>{{ user.location }}</td>
       </tr>
       </tbody>
     </table>

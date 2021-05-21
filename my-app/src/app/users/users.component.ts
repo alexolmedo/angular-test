@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../user";
 import {UserRestService} from "../user-rest.service";
+import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -18,6 +20,23 @@ export class UsersComponent implements OnInit {
         this.users = users;
         console.log(this.users)
       });
+  }
+
+  form = new FormGroup({});
+  model = { username: '' };
+  fields: FormlyFieldConfig[] = [
+    {
+      key: 'username',
+      type: 'input',
+      templateOptions: {
+        label: 'Search username:',
+        placeholder: 'Enter a username'
+      }
+    }
+  ];
+
+  onSubmit() {
+    console.log(this.model);
   }
 
 }
