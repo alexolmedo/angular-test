@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../user";
 import {UserRestService} from "../user-rest.service";
 import {FormlyFieldConfig} from "@ngx-formly/core";
@@ -12,24 +12,25 @@ import {FormGroup} from "@angular/forms";
 export class UsersComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private readonly _userRest: UserRestService) { }
+  constructor(private readonly _userRest: UserRestService) {
+  }
 
   ngOnInit(): void {
-      const usuarios$ = this._userRest.findAll();
-      usuarios$.subscribe((users) => {
-        this.users = users;
-        console.log(this.users)
-      });
+    const usuarios$ = this._userRest.findAll();
+    usuarios$.subscribe((users) => {
+      this.users = users;
+      console.log(this.users)
+    });
   }
 
   form = new FormGroup({});
-  model = { username: '' };
+  model = {username: ''};
   fields: FormlyFieldConfig[] = [
     {
       key: 'username',
       type: 'input',
       templateOptions: {
-        label: 'Search username:',
+        label: 'Add Github username:',
         placeholder: 'Enter a username'
       }
     }
@@ -37,6 +38,17 @@ export class UsersComponent implements OnInit {
 
   onSubmit() {
     console.log(this.model);
+  }
+
+  deleteUser(id: number | string) {
+    const eliminarConductor = this._userRest.delete(id);
+    eliminarConductor.subscribe(
+      (usuario) => {
+        this.users.splice(this.users.findIndex((m) => m.id === id), 1);
+        alert('User deleted!');
+      },
+      (error) => alert('User ' + id + ' couldn\'t be deleted')
+    );
   }
 
 }

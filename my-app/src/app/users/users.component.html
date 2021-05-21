@@ -2,7 +2,7 @@
   <div class="col">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-      <button type="Search" class="btn btn-primary">Search</button>
+      <button type="Search" class="btn btn-primary">Add</button>
     </form>
   </div>
 </div>
@@ -15,6 +15,7 @@
         <th scope="col">Name</th>
         <th scope="col">Repos</th>
         <th scope="col">Population</th>
+        <th scope="col">Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -25,6 +26,9 @@
         </td>
         <td>{{ user.public_repos }}</td>
         <td>{{ user.location }}</td>
+        <td>
+          <button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>
+        </td>
       </tr>
       </tbody>
     </table>
