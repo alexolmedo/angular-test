@@ -3,6 +3,7 @@ import {User} from "../user";
 import {UserRestService} from "../user-rest.service";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {FormGroup} from "@angular/forms";
+import {GithubRestService} from "../github-rest.service";
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,8 @@ import {FormGroup} from "@angular/forms";
 export class UsersComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private readonly _userRest: UserRestService) {
+  constructor(private readonly _userRest: UserRestService,
+              private readonly _githubRest: GithubRestService) {
   }
 
   ngOnInit(): void {
@@ -24,7 +26,7 @@ export class UsersComponent implements OnInit {
   }
 
   form = new FormGroup({});
-  model = {username: ''};
+  formModel = {username: ''};
   fields: FormlyFieldConfig[] = [
     {
       key: 'username',
@@ -37,7 +39,11 @@ export class UsersComponent implements OnInit {
   ];
 
   onSubmit() {
-    console.log(this.model);
+    const username = this.formModel.username
+    const usuarios$ = this._githubRest.find(username);
+    usuarios$.subscribe((user) => {
+      console.log(user)
+    });
   }
 
   deleteUser(id: number | string) {

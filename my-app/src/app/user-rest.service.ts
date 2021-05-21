@@ -17,13 +17,13 @@ export class UserRestService {
 
   findAll(): Observable<User[]> {
     return this._httpClient
-      .get(environment.url + this.model)
+      .get(environment.apiURL + this.model)
       .pipe(map(r => r as User[]));
   }
 
   delete(id: number | string): Observable<number> {
     return this._httpClient
-      .delete(environment.url + this.model + `/${id}`)
+      .delete(environment.apiURL + this.model + `/${id}`)
       .pipe(map(r => r as number));
   }
 
