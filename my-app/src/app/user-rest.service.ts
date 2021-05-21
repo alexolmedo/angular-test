@@ -15,18 +15,21 @@ export class UserRestService {
   constructor(private readonly _httpClient: HttpClient) {
   }
 
+  // Find all users to display in table
   findAll(): Observable<User[]> {
     return this._httpClient
       .get(environment.apiURL + this.model)
       .pipe(map(r => r as User[]));
   }
 
+  // Delete a user
   delete(id: number | string): Observable<number> {
     return this._httpClient
       .delete(environment.apiURL + this.model + `/${id}`)
       .pipe(map(r => r as number));
   }
 
+  // Add a new user
   create(user: User) {
     const url = environment.apiURL + this.model;
     return this._httpClient

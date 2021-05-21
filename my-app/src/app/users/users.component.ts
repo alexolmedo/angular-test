@@ -19,12 +19,15 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // Fill table data
     const usuarios$ = this._userRest.findAll();
     usuarios$.subscribe((users) => {
       this.users = users;
     });
   }
 
+  // Formly field for username search
   form = new FormGroup({});
   formModel = {username: ''};
   fields: FormlyFieldConfig[] = [
@@ -38,6 +41,7 @@ export class UsersComponent implements OnInit {
     }
   ];
 
+  // Search username in Github
   onSubmit() {
     const username = this.formModel.username
     const usuarios$ = this._githubRest.find(username);
@@ -53,6 +57,7 @@ export class UsersComponent implements OnInit {
     )
   }
 
+  // Delete username button
   deleteUser(id: number | string) {
     this._userRest.delete(id)
       .subscribe(
@@ -64,6 +69,7 @@ export class UsersComponent implements OnInit {
       );
   }
 
+  // Create user after getting github data
   createUser(user: User) {
     this._userRest.create(
       user

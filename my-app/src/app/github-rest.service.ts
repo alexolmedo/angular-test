@@ -15,6 +15,7 @@ export class GithubRestService {
   constructor(private readonly _httpClient: HttpClient) {
   }
 
+  // Get userdata from Github
   find(username: string): Observable<User> {
     return this._httpClient
       .get(environment.githubURL + this.model + '/' + username)
