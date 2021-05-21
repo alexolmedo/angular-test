@@ -32,7 +32,7 @@ export class UsersComponent implements OnInit {
       key: 'username',
       type: 'input',
       templateOptions: {
-        label: 'Add Github username:',
+        label: 'Search Github username:',
         placeholder: 'Enter a username'
       }
     }
@@ -42,8 +42,15 @@ export class UsersComponent implements OnInit {
     const username = this.formModel.username
     const usuarios$ = this._githubRest.find(username);
     usuarios$.subscribe((user) => {
-      this.createUser(user)
-    });
+        if (this.users.findIndex((m) => m.id === user.id) < 0) {
+          this.createUser(user)
+        } else {
+          alert('The username was already added');
+        }
+      }, (error => {
+        alert('The username couldn\'t be found');
+      })
+    )
   }
 
   deleteUser(id: number | string) {
