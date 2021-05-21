@@ -8,15 +8,15 @@ import {UserRestService} from "../user-rest.service";
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  usuarios: User[] = [];
+  users: User[] = [];
 
   constructor(private readonly _userRest: UserRestService) { }
 
   ngOnInit(): void {
       const usuarios$ = this._userRest.findAll();
-      usuarios$.subscribe((usuarios) => {
-        this.usuarios = usuarios;
-        console.log(this.usuarios)
+      usuarios$.subscribe((users) => {
+        this.users = users;
+        console.log(this.users)
       });
   }
 

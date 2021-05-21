@@ -1,1 +1,24 @@
-<p>users works!</p>
+<div class="row">
+  <div class="col">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Repos</th>
+        <th scope="col">Population</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <th scope="row">{{ user.id | number }}</th>
+        <td>
+          {{ user.name }}
+        </td>
+        <td>{{ user.public_repos | number }}</td>
+        <td>{{ user.location | number }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
