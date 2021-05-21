@@ -4,6 +4,7 @@ import {UserRestService} from "../user-rest.service";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {FormGroup} from "@angular/forms";
 import {GithubRestService} from "../github-rest.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users',
@@ -21,7 +22,6 @@ export class UsersComponent implements OnInit {
     const usuarios$ = this._userRest.findAll();
     usuarios$.subscribe((users) => {
       this.users = users;
-      console.log(this.users)
     });
   }
 
@@ -42,18 +42,35 @@ export class UsersComponent implements OnInit {
     const username = this.formModel.username
     const usuarios$ = this._githubRest.find(username);
     usuarios$.subscribe((user) => {
-      console.log(user)
+      this.createUser(user)
     });
   }
 
   deleteUser(id: number | string) {
-    const eliminarConductor = this._userRest.delete(id);
-    eliminarConductor.subscribe(
-      (usuario) => {
-        this.users.splice(this.users.findIndex((m) => m.id === id), 1);
-        alert('User deleted!');
-      },
-      (error) => alert('User ' + id + ' couldn\'t be deleted')
+    this._userRest.delete(id)
+      .subscribe(
+        (usuario) => {
+          this.users.splice(this.users.findIndex((m) => m.id === id), 1);
+          alert('User deleted!');
+        },
+        (error) => alert('User ' + id + ' couldn\'t be deleted')
+      );
+  }
+
+  createUser(user: User) {
+    this._userRest.create(
+      user
+    ).subscribe(
+      (user: User) => {
+        alert(`User added successfully: ${user.login}`);
+        const url = [
+          '/',
+          'users'
+        ];
+        window.location.reload();
+      }, (error => {
+        console.error('Error: ', error);
+      })
     );
   }
 

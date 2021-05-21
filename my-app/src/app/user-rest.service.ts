@@ -27,4 +27,11 @@ export class UserRestService {
       .pipe(map(r => r as number));
   }
 
+  create(user: User) {
+    const url = environment.apiURL + this.model;
+    return this._httpClient
+      .post(environment.apiURL + this.model, user)
+      .pipe(map(r => r as User));
+  }
+
 }
